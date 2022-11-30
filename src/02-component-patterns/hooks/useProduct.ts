@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Interface } from 'readline';
 import { Product, onChangeArgs } from '../interfaces/interfaces';
 
@@ -13,13 +13,7 @@ export const useProduct = ({ onChange, product, value = 0 }: useProductArgs ) =>
 
     const [counter, setCounter] = useState( value );
 
-    const isControlled = useRef( !!onChange );
-
     const increaseBy = ( value: number ) => {
-
-      if ( isControlled ) {
-        return onChange!({ count: value, product });
-      }
 
       const newValue = Math.max( counter + value, 0 );
 
