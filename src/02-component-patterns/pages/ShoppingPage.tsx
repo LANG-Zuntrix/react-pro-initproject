@@ -2,46 +2,16 @@ import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../comp
 import { Product } from "../interfaces/interfaces";
 import '../styles/custom-styles.css';
 import { useState } from 'react';
+import { UseShoppingCart } from "../hooks/useShoppingCart";
+import { products } from '../data/products';
 
-const product1 = {
-  id: '1',
-  title: 'Coffee Mug - card',
-  img: './coffee-mug.png'
-}
-const product2 = {
-  id: '2',
-  title: 'Coffee Mug - Meme',
-  img: './coffee-mug2.png'
-}
 
-const products: Product[] = [ product1, product2 ];
 
-interface ProductInCart extends Product {
-    count: number;
-}
+
 
 export const ShoppingPage = () => {
 
-  const [shoppingCart, setShoppingCart] = useState<{ [key:string]: ProductInCart }>({})
-
-  const onProductCountChange = ({ count, product }: {count: number, product: Product }) => {
-    // console.log( count, product );
-    
-    setShoppingCart( oldShoppingCart => {
-      
-      if( count === 0 ) {
-
-        const { [product.id]: toDelete, ...rest } = oldShoppingCart;
-        return rest;
-      }
-
-      return {
-        ...oldShoppingCart,
-        [ product.id ]: { ...product, count }
-      }
-    })
-    
-  }
+  const { shoppingCart, onProductCountChange } = UseShoppingCart()
 
 
   return (
@@ -63,6 +33,7 @@ export const ShoppingPage = () => {
               product={ product } 
               key={ product.id }
               onChange={ onProductCountChange }
+              value= { shoppingCart[product.id]?.count || 0 }
             >
               <ProductImage className="custom-image" 
                 isActive="false"
@@ -91,6 +62,7 @@ export const ShoppingPage = () => {
               style={{ width: '100px' }}
               // onChange={ () => onProductCountChange() }
               value={ product.count }
+              onChange={ onProductCountChange }
             >
               <ProductImage className="custom-image" 
                 isActive="false"
