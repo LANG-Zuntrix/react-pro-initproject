@@ -32,7 +32,6 @@ export const ShoppingPage = () => {
       if( count === 0 ) {
 
         const { [product.id]: toDelete, ...rest } = oldShoppingCart;
-        console.log({ toDelete })
         return rest;
       }
 
