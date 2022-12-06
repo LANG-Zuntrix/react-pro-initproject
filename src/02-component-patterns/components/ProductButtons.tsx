@@ -10,7 +10,10 @@ export interface Props {
 
 export const ProductButtons = ( { className, style }:Props ) => {
 
+    // TODO : maxCount
     const { increaseBy, counter } = useContext( ProductContext );
+
+    // TODO : isMaxReached = useCallback, dependencias [ counter, maxCounter]
   
     return (
       <div className={ `${styles.buttonsContainer} ${ className }`} style={ style }>
