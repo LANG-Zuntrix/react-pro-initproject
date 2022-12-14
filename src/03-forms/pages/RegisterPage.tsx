@@ -1,28 +1,20 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import "../styles/styles.css";
+import { useForm } from '../hooks/useForm';
 
 export const RegisterPage = () => {
 
-    const [registerData, setRegisterData] = useState({
+
+    const { formData, onChange, name, email, password1, password2, resetForm, isValidEmail } = useForm({
         name: '',
         email: '',
         password1: '',
         password2: '',
-    })
-
-    const { name, email, password1, password2 } = registerData;
-
-    const onChange = ( event:ChangeEvent<HTMLInputElement> ) => {
-
-        setRegisterData( prev => ({
-            ...prev,
-            [event.target.name]: event.target.value,
-        }))
-    }
+    });
 
     const onSubmit = ( event:FormEvent<HTMLFormElement> ) => {
         event.preventDefault();
-        console.log( registerData )
+        console.log( formData )
     }
 
   return (
@@ -30,12 +22,50 @@ export const RegisterPage = () => {
         <h1>Register Page</h1>
 
         <form onSubmit={ onSubmit } noValidate>
-            <input type="text" name='name' placeholder="Name" value={ name } onChange={ onChange } />
-            <input type="email" name='email' placeholder="Email" value={ email } onChange={ onChange } />
-            <input type="password" name='password1' placeholder="Password" value={ password1 } onChange={ onChange } />
-            <input type="password" name='password2' placeholder="Repeat Password" value={ password2 } onChange={ onChange } />
+            <input
+                type="text"
+                name='name'
+                placeholder="Name"
+                value={ name }
+                onChange={ onChange }
+                className={ `${ name.trim().length <= 0 && 'has-error' }` }
+            />
+            { name.trim().length <= 0 && <span>Este campo es necesario</span> }
+
+            <input
+                type="email" name='email'
+                placeholder="Email"
+                value={ email }
+                onChange={ onChange }
+                className={ `${ !isValidEmail( email ) && 'has-error' }` }
+            />
+            { !isValidEmail( email ) && <span>Email no es válido</span> }
+
+
+            <input
+                type="password"
+                name='password1'
+                placeholder="Password"
+                value={ password1 }
+                onChange={ onChange }
+            />
+            { password1.trim().length <= 0 && <span>Este campo es necesario</span> }
+            { password1.trim().length < 6 && password1.trim().length > 0 && <span>La contraseña debe tener más de 6 caractéres</span> }
+
+
+            <input
+                type="password"
+                name='password2'
+                placeholder="Repeat Password"
+                value={ password2 }
+                onChange={ onChange }
+            />
+            { password2.trim().length <= 0 && <span>Este campo es necesario</span> }
+            { password2.trim().length > 0 && password1 !== password2 && <span>Las contraseñas deben de ser igual</span> }
+
 
             <button type="submit">Create</button>
+            <button type="button" onClick={ resetForm }>Reset form</button>
         </form>
     </div>
   )
