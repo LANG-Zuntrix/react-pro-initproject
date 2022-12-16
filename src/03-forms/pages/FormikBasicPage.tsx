@@ -1,5 +1,4 @@
 import { useFormik, FormikErrors } from "formik";
-import { ErrorMessage } from "formik/dist/ErrorMessage";
 import '../styles/styles.css';
 
 interface FormValues {
@@ -32,22 +31,20 @@ export const FormikBasicPage = () => {
             errors.email = 'Invalid email address';
         }
 
-
-
-        return ErrorMessage;
+        return errors;
     }
 
 
-    const { handleChange, values, handleSubmit } = useFormik({
+    const { handleChange, values, handleSubmit, errors, touched, handleBlur } = useFormik({
         initialValues: {
             firstName: '',
             lastName: '',
             email: '',
         },
-        onSubmit: (values) => {
-            console.log(values);
+        validate,
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
         },
-        validate
     });
 
   return (
@@ -59,29 +56,31 @@ export const FormikBasicPage = () => {
             <input
                 type="text"
                 name="firstName"
+                onBlur={ handleBlur }
                 onChange={ handleChange }
                 value={ values.firstName }
             />
-            <span>First name is required</span>
+            { touched.firstName && errors.firstName && <span>{ errors.firstName }</span> }
 
             <label htmlFor="lastName">Last Name</label>
             <input
                 type="text"
                 name="lastName"
+                onBlur={ handleBlur }
                 onChange={ handleChange }
                 value={ values.lastName }
             />
-            <span>Last name is required</span>
+            { touched.lastName && errors.lastName && <span>{ errors.lastName }</span> }
 
             <label htmlFor="email">Email Address</label>
             <input
                 type="email"
                 name="email"
+                onBlur={ handleBlur }
                 onChange={ handleChange }
                 value={ values.email }
             />
-            <span>Email is required</span>
-            <span>Check for a valid enail format</span>
+            { touched.email && errors.email && <span>{ errors.email }</span> }
 
             <button type='submit'>Submit</button>
         </form>
