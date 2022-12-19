@@ -31,21 +31,27 @@ export const FormikComponents = () => {
                                     .required('Requerido'),
             })}
         >
-            <Form>
-                <label htmlFor="firstName">Firs Name</label>
-                <input type="text" { ...getFieldProps('firstName') } />
-                { touched.firstName && errors.firstName && <span>{ errors.firstName }</span> }
+        
+            {
+                (formik) => (
+                    <Form>
+                        <label htmlFor="firstName">Firs Name</label>
+                        <Field name="firstName" type="text" />
+                        <ErrorMessage name="firstName" component="span" />
 
-                <label htmlFor="lastName">Last Name</label>
-                <input type="text" { ...getFieldProps('lastName') } />
-                { touched.lastName && errors.lastName && <span>{ errors.lastName }</span> }
+                        <label htmlFor="lastName">Last Name</label>
+                        <Field name="lastName" type="text" />
+                        <ErrorMessage name="lastName" component="span" />
 
-                <label htmlFor="email">Email Address</label>
-                <input type="email" { ...getFieldProps('email') } />
-                { touched.email && errors.email && <span>{ errors.email }</span> }
+                        <label htmlFor="email">Email Address</label>
+                        <Field name="email" type="text" />
+                        <ErrorMessage name="email" component="span" />
 
-                <button type='submit'>Submit</button>
-            </Form>
+                        <button type='submit'>Submit</button>
+                    </Form>
+                )
+            }
+
         </Formik>
 
 
