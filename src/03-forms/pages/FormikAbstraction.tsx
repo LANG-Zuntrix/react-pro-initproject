@@ -1,13 +1,14 @@
 import { Field, Form, ErrorMessage, Formik, FormikHelpers, FormikValues } from "formik";
 import * as Yup from "yup";
+import { MyTextInput } from '../components/MyTextInput';
 import '../styles/styles.css';
 
-export const FormikComponents = () => {
+export const FormikAbstraction = () => {
 
 
   return (
     <div>
-        <h1>Formik Components</h1>
+        <h1>Formik Abstractation</h1>
 
         <Formik
             initialValues={{
@@ -42,17 +43,13 @@ export const FormikComponents = () => {
             {
                 (formik) => (
                     <Form>
-                        <label htmlFor="firstName">Firs Name</label>
-                        <Field name="firstName" type="text" />
-                        <ErrorMessage name="firstName" component="span" />
 
-                        <label htmlFor="lastName">Last Name</label>
-                        <Field name="lastName" type="text" />
-                        <ErrorMessage name="lastName" component="span" />
+                        <MyTextInput label="First Name" name="firstName"  placeholder="Luis"/>
 
-                        <label htmlFor="email">Email Address</label>
-                        <Field name="email" type="text" />
-                        <ErrorMessage name="email" component="span" />
+                        <MyTextInput label="Last Name" name="lastName"  placeholder="Angel"/>
+
+                        <MyTextInput label="Email" name="email"  placeholder="xxx@email.com"/>
+
 
                         <label htmlFor="jobType">Job Type</label>
                         <Field name="jobType" as="select">
